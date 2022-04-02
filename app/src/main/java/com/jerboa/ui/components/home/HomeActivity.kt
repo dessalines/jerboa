@@ -26,6 +26,7 @@ import com.jerboa.fetchInitialData
 import com.jerboa.openLink
 import com.jerboa.scrollToTop
 import com.jerboa.ui.components.common.BottomAppBarAll
+import com.jerboa.ui.components.common.WindowSize
 import com.jerboa.ui.components.common.getCurrentAccount
 import com.jerboa.ui.components.community.CommunityViewModel
 import com.jerboa.ui.components.community.communityClickWrapper
@@ -45,6 +46,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun HomeActivity(
     navController: NavController,
+    windowSize: WindowSize,
     homeViewModel: HomeViewModel,
     communityViewModel: CommunityViewModel,
     personProfileViewModel: PersonProfileViewModel,
@@ -100,6 +102,7 @@ fun HomeActivity(
             content = {
                 MainPostListingsContent(
                     padding = it,
+                    windowSize = windowSize,
                     homeViewModel = homeViewModel,
                     communityViewModel = communityViewModel,
                     personProfileViewModel = personProfileViewModel,
@@ -164,6 +167,7 @@ fun HomeActivity(
 @Composable
 fun MainPostListingsContent(
     homeViewModel: HomeViewModel,
+    windowSize: WindowSize,
     communityViewModel: CommunityViewModel,
     personProfileViewModel: PersonProfileViewModel,
     postViewModel: PostViewModel,
@@ -177,6 +181,7 @@ fun MainPostListingsContent(
 ) {
     PostListings(
         listState = postListState,
+        windowSize = windowSize,
         padding = padding,
         posts = homeViewModel.posts,
         onUpvoteClick = { postView ->

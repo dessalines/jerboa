@@ -19,6 +19,7 @@ import com.jerboa.ui.components.comment.edit.CommentEditViewModel
 import com.jerboa.ui.components.comment.reply.CommentReplyActivity
 import com.jerboa.ui.components.comment.reply.CommentReplyViewModel
 import com.jerboa.ui.components.common.getCurrentAccount
+import com.jerboa.ui.components.common.rememberWindowSizeClass
 import com.jerboa.ui.components.community.CommunityActivity
 import com.jerboa.ui.components.community.CommunityViewModel
 import com.jerboa.ui.components.community.list.CommunityListActivity
@@ -76,6 +77,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             JerboaTheme {
+                val windowSize = rememberWindowSizeClass()
 
                 val navController = rememberNavController()
 
@@ -100,6 +102,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = "home") {
                         HomeActivity(
                             navController = navController,
+                            windowSize = windowSize,
                             homeViewModel = homeViewModel,
                             communityViewModel = communityViewModel,
                             personProfileViewModel = personProfileViewModel,
@@ -114,6 +117,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = "community") {
                         CommunityActivity(
                             navController = navController,
+                            windowSize = windowSize,
                             communityViewModel = communityViewModel,
                             personProfileViewModel = personProfileViewModel,
                             postViewModel = postViewModel,
@@ -136,6 +140,7 @@ class MainActivity : ComponentActivity() {
                         PersonProfileActivity(
                             savedMode = it.arguments?.getBoolean("saved")!!,
                             navController = navController,
+                            windowSize = windowSize,
                             personProfileViewModel = personProfileViewModel,
                             postViewModel = postViewModel,
                             communityViewModel = communityViewModel,

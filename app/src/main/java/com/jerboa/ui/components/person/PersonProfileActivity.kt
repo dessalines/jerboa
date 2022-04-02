@@ -33,6 +33,7 @@ import com.jerboa.ui.components.comment.edit.commentEditClickWrapper
 import com.jerboa.ui.components.comment.reply.CommentReplyViewModel
 import com.jerboa.ui.components.comment.reply.commentReplyClickWrapper
 import com.jerboa.ui.components.common.BottomAppBarAll
+import com.jerboa.ui.components.common.WindowSize
 import com.jerboa.ui.components.common.getCurrentAccount
 import com.jerboa.ui.components.community.CommunityLink
 import com.jerboa.ui.components.community.CommunityViewModel
@@ -56,6 +57,7 @@ import kotlinx.coroutines.launch
 fun PersonProfileActivity(
     savedMode: Boolean,
     navController: NavController,
+    windowSize: WindowSize,
     personProfileViewModel: PersonProfileViewModel,
     postViewModel: PostViewModel,
     communityViewModel: CommunityViewModel,
@@ -119,6 +121,7 @@ fun PersonProfileActivity(
                     savedMode = savedMode,
                     padding = it,
                     navController = navController,
+                    windowSize = windowSize,
                     personProfileViewModel = personProfileViewModel,
                     postViewModel = postViewModel,
                     communityViewModel = communityViewModel,
@@ -180,6 +183,7 @@ enum class UserTab {
 fun UserTabs(
     savedMode: Boolean,
     navController: NavController,
+    windowSize: WindowSize,
     personProfileViewModel: PersonProfileViewModel,
     communityViewModel: CommunityViewModel,
     ctx: Context,
@@ -288,6 +292,7 @@ fun UserTabs(
                 UserTab.Posts.ordinal -> {
                     PostListings(
                         posts = personProfileViewModel.posts,
+                        windowSize = windowSize,
                         listState = postListState,
                         onUpvoteClick = { postView ->
                             personProfileViewModel.likePost(

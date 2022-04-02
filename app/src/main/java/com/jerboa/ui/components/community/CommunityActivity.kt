@@ -17,6 +17,7 @@ import com.jerboa.db.AccountViewModel
 import com.jerboa.openLink
 import com.jerboa.scrollToTop
 import com.jerboa.ui.components.common.BottomAppBarAll
+import com.jerboa.ui.components.common.WindowSize
 import com.jerboa.ui.components.common.getCurrentAccount
 import com.jerboa.ui.components.home.HomeViewModel
 import com.jerboa.ui.components.inbox.InboxViewModel
@@ -34,6 +35,7 @@ import com.jerboa.ui.components.report.postReportClickWrapper
 @Composable
 fun CommunityActivity(
     navController: NavController,
+    windowSize: WindowSize,
     communityViewModel: CommunityViewModel,
     personProfileViewModel: PersonProfileViewModel,
     postViewModel: PostViewModel,
@@ -99,6 +101,7 @@ fun CommunityActivity(
                 PostListings(
                     showCommunityName = false,
                     listState = postListState,
+                    windowSize = windowSize,
                     padding = it,
                     contentAboveListings = {
                         communityViewModel.communityView?.also {

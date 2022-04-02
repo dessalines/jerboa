@@ -1,9 +1,12 @@
 package com.jerboa.ui.components.post
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.*
@@ -18,9 +21,12 @@ import com.jerboa.datatypes.PostView
 import com.jerboa.datatypes.samplePostView
 import com.jerboa.db.Account
 import com.jerboa.isScrolledToEnd
+import com.jerboa.ui.components.common.WindowSize
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PostListings(
+    windowSize: WindowSize,
     posts: List<PostView>,
     contentAboveListings: @Composable () -> Unit = {},
     onUpvoteClick: (postView: PostView) -> Unit,
@@ -46,40 +52,68 @@ fun PostListings(
         state = rememberSwipeRefreshState(loading),
         onRefresh = onSwipeRefresh,
     ) {
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .padding(padding)
-            // .simpleVerticalScrollbar(listState)
-        ) {
-            // TODO this should be a .also?
-            item {
-                contentAboveListings()
-            }
 
-            // List of items
-            items(posts) { postView ->
-                PostListing(
-                    postView = postView,
-                    onUpvoteClick = onUpvoteClick,
-                    onDownvoteClick = onDownvoteClick,
-                    onPostClick = onPostClick,
-                    onPostLinkClick = onPostLinkClick,
-                    onSaveClick = onSaveClick,
-                    onCommunityClick = onCommunityClick,
-                    onPersonClick = onPersonClick,
-                    onEditPostClick = onEditPostClick,
-                    onReportClick = onReportClick,
-                    onBlockCommunityClick = onBlockCommunityClick,
-                    onBlockCreatorClick = onBlockCreatorClick,
-                    account = account,
-                    showCommunityName = showCommunityName,
-                    isModerator = false // TODO can't know with many posts
-                )
+        if (windowSize == WindowSize.Expanded) {
+            LazyVerticalGrid(
+                cells = GridCells.Adaptive(minSize = 400.dp)
+                // listState = listState,
+            ) {
+                // List of items
+                items(posts) { postView ->
+                    PostListing(
+                        postView = postView,
+                        onUpvoteClick = onUpvoteClick,
+                        onDownvoteClick = onDownvoteClick,
+                        onPostClick = onPostClick,
+                        onPostLinkClick = onPostLinkClick,
+                        onSaveClick = onSaveClick,
+                        onCommunityClick = onCommunityClick,
+                        onPersonClick = onPersonClick,
+                        onEditPostClick = onEditPostClick,
+                        onReportClick = onReportClick,
+                        onBlockCommunityClick = onBlockCommunityClick,
+                        onBlockCreatorClick = onBlockCreatorClick,
+                        account = account,
+                        showCommunityName = showCommunityName,
+                        isModerator = false // TODO can't know with many posts
+                    )
+                }
+            }
+        } else {
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .padding(padding)
+                // .simpleVerticalScrollbar(listState)
+            ) {
+                // TODO this should be a .also?
+                item {
+                    contentAboveListings()
+                }
+
+                // List of items
+                items(posts) { postView ->
+                    PostListing(
+                        postView = postView,
+                        onUpvoteClick = onUpvoteClick,
+                        onDownvoteClick = onDownvoteClick,
+                        onPostClick = onPostClick,
+                        onPostLinkClick = onPostLinkClick,
+                        onSaveClick = onSaveClick,
+                        onCommunityClick = onCommunityClick,
+                        onPersonClick = onPersonClick,
+                        onEditPostClick = onEditPostClick,
+                        onReportClick = onReportClick,
+                        onBlockCommunityClick = onBlockCommunityClick,
+                        onBlockCreatorClick = onBlockCreatorClick,
+                        account = account,
+                        showCommunityName = showCommunityName,
+                        isModerator = false // TODO can't know with many posts
+                    )
+                }
             }
         }
     }
-
     // observer when reached end of list
     val endOfListReached by remember {
         derivedStateOf {
@@ -115,5 +149,6 @@ fun PreviewPostListings() {
         onBlockCreatorClick = {},
         onBlockCommunityClick = {},
         listState = rememberLazyListState(),
+        windowSize = WindowSize.Compact,
     )
 }
