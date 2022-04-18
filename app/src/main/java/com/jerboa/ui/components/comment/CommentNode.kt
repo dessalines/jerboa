@@ -6,6 +6,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Divider
@@ -101,8 +102,7 @@ fun CommentBodyPreview() {
     CommentBody(commentView = sampleCommentView, viewSource = false)
 }
 
-@Composable
-fun CommentNode(
+fun LazyListScope.CommentNode(
     node: CommentNodeData,
     moderators: List<CommunityModeratorView>,
     onUpvoteClick: (commentView: CommentView) -> Unit,
@@ -120,125 +120,128 @@ fun CommentNode(
     showRead: Boolean = false,
     account: Account?,
 ) {
-    val offset = calculateCommentOffset(node.depth, 4)
-    val offset2 = if (node.depth == null) {
-        0.dp
-    } else {
-        LARGE_PADDING
-    }
-    val borderColor = calculateBorderColor(node.depth)
-    val commentView = node.commentView
+    item {
+        val offset = calculateCommentOffset(node.depth, 4)
+        val offset2 = if (node.depth == null) {
+            0.dp
+        } else {
+            LARGE_PADDING
+        }
+        val borderColor = calculateBorderColor(node.depth)
+        val commentView = node.commentView
 
-    // These are necessary for instant comment voting
-    val score = node.commentView.counts.score
-    val myVote = node.commentView.my_vote
-    val upvotes = node.commentView.counts.upvotes
-    val downvotes = node.commentView.counts.downvotes
+        // These are necessary for instant comment voting
+        val score = node.commentView.counts.score
+        val myVote = node.commentView.my_vote
+        val upvotes = node.commentView.counts.upvotes
+        val downvotes = node.commentView.counts.downvotes
 
-    var expanded by remember { mutableStateOf(true) }
+        var expanded by remember { mutableStateOf(true) }
 
-    var viewSource by remember { mutableStateOf(false) }
+        var viewSource by remember { mutableStateOf(false) }
 
-    val border = Border(SMALL_PADDING, borderColor)
+        val border = Border(SMALL_PADDING, borderColor)
 
-    Column(
-        modifier = Modifier
-            .padding(
-                start = offset
-            )
-    ) {
-        Divider(startIndent = offset2)
         Column(
             modifier = Modifier
                 .padding(
-                    horizontal = LARGE_PADDING,
+                    start = offset
                 )
-                .border(start = border)
         ) {
+            Divider(startIndent = offset2)
             Column(
-                modifier = Modifier.padding(start = offset2)
-            ) {
-                if (showPostAndCommunityContext) {
-                    PostAndCommunityContextHeader(
-                        commentView = commentView,
-                        onCommunityClick = onCommunityClick,
-                        onPostClick = onPostClick,
+                modifier = Modifier
+                    .padding(
+                        horizontal = LARGE_PADDING,
                     )
-                }
-                CommentNodeHeader(
-                    commentView = commentView,
-                    onPersonClick = onPersonClick,
-                    score = score,
-                    myVote = myVote,
-                    isModerator = isModerator(commentView.creator, moderators),
-                    onLongClick = {
-                        expanded = !expanded
-                    }
-                )
-                AnimatedVisibility(
-                    visible = expanded,
-                    enter = expandVertically(),
-                    exit = shrinkVertically(),
+                    .border(start = border)
+            ) {
+                Column(
+                    modifier = Modifier.padding(start = offset2)
                 ) {
-                    Column {
-                        CommentBody(
+                    if (showPostAndCommunityContext) {
+                        PostAndCommunityContextHeader(
                             commentView = commentView,
-                            viewSource = viewSource,
+                            onCommunityClick = onCommunityClick,
+                            onPostClick = onPostClick,
                         )
-                        CommentFooterLine(
-                            commentView = commentView,
-                            onUpvoteClick = {
-                                onUpvoteClick(it)
-                            },
-                            onDownvoteClick = {
-                                onDownvoteClick(it)
-                            },
-                            onViewSourceClick = {
-                                viewSource = !viewSource
-                            },
-                            onEditCommentClick = onEditCommentClick,
-                            onReplyClick = onReplyClick,
-                            onSaveClick = onSaveClick,
-                            onMarkAsReadClick = onMarkAsReadClick,
-                            onReportClick = onReportClick,
-                            onBlockCreatorClick = onBlockCreatorClick,
-                            showRead = showRead,
-                            myVote = myVote,
-                            upvotes = upvotes,
-                            downvotes = downvotes,
-                            account = account,
-                        )
+                    }
+                    CommentNodeHeader(
+                        commentView = commentView,
+                        onPersonClick = onPersonClick,
+                        score = score,
+                        myVote = myVote,
+                        isModerator = isModerator(commentView.creator, moderators),
+                        onLongClick = {
+                            expanded = !expanded
+                        }
+                    )
+                    AnimatedVisibility(
+                        visible = expanded,
+                        enter = expandVertically(),
+                        exit = shrinkVertically(),
+                    ) {
+                        Column {
+                            CommentBody(
+                                commentView = commentView,
+                                viewSource = viewSource,
+                            )
+                            CommentFooterLine(
+                                commentView = commentView,
+                                onUpvoteClick = {
+                                    onUpvoteClick(it)
+                                },
+                                onDownvoteClick = {
+                                    onDownvoteClick(it)
+                                },
+                                onViewSourceClick = {
+                                    viewSource = !viewSource
+                                },
+                                onEditCommentClick = onEditCommentClick,
+                                onReplyClick = onReplyClick,
+                                onSaveClick = onSaveClick,
+                                onMarkAsReadClick = onMarkAsReadClick,
+                                onReportClick = onReportClick,
+                                onBlockCreatorClick = onBlockCreatorClick,
+                                showRead = showRead,
+                                myVote = myVote,
+                                upvotes = upvotes,
+                                downvotes = downvotes,
+                                account = account,
+                            )
+                        }
                     }
                 }
             }
         }
     }
-    AnimatedVisibility(
-        visible = expanded,
-        enter = expandVertically(),
-        exit = shrinkVertically(),
-    ) {
-        node.children?.also { nodes ->
-            CommentNodes(
-                nodes = nodes,
-                onUpvoteClick = onUpvoteClick,
-                onDownvoteClick = onDownvoteClick,
-                onSaveClick = onSaveClick,
-                onMarkAsReadClick = onMarkAsReadClick,
-                onEditCommentClick = onEditCommentClick,
-                onPersonClick = onPersonClick,
-                onCommunityClick = onCommunityClick,
-                onPostClick = onPostClick,
-                showPostAndCommunityContext = showPostAndCommunityContext,
-                onReportClick = onReportClick,
-                showRead = showRead,
-                onReplyClick = onReplyClick,
-                onBlockCreatorClick = onBlockCreatorClick,
-                account = account,
-                moderators = moderators,
-            )
-        }
+    // AnimatedVisibility(
+    //     visible = expanded,
+    //     enter = expandVertically(),
+    //     exit = shrinkVertically(),
+    // ) {
+    // if ( expanded ) {
+    node.children?.also { nodes ->
+        CommentNodes(
+            nodes = nodes,
+            onUpvoteClick = onUpvoteClick,
+            onDownvoteClick = onDownvoteClick,
+            onSaveClick = onSaveClick,
+            onMarkAsReadClick = onMarkAsReadClick,
+            onEditCommentClick = onEditCommentClick,
+            onPersonClick = onPersonClick,
+            onCommunityClick = onCommunityClick,
+            onPostClick = onPostClick,
+            showPostAndCommunityContext = showPostAndCommunityContext,
+            onReportClick = onReportClick,
+            showRead = showRead,
+            onReplyClick = onReplyClick,
+            onBlockCreatorClick = onBlockCreatorClick,
+            account = account,
+            moderators = moderators,
+        )
     }
+    // }
 }
 
 @Composable
@@ -385,30 +388,6 @@ fun CommentFooterLine(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun CommentNodesPreview() {
-    val comments = listOf(
-        sampleSecondCommentReplyView, sampleCommentReplyView, sampleCommentView
-    )
-    val tree = buildCommentsTree(comments, SortType.Hot)
-    CommentNodes(
-        nodes = tree,
-        moderators = listOf(),
-        onCommunityClick = {},
-        onDownvoteClick = {},
-        onEditCommentClick = {},
-        onMarkAsReadClick = {},
-        onPersonClick = {},
-        onPostClick = {},
-        onReportClick = {},
-        onReplyClick = {},
-        onSaveClick = {},
-        onUpvoteClick = {},
-        onBlockCreatorClick = {},
-    )
 }
 
 @Composable

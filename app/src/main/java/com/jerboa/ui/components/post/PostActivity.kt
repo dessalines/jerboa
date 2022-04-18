@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -22,7 +21,7 @@ import com.jerboa.datatypes.SortType
 import com.jerboa.db.AccountViewModel
 import com.jerboa.isModerator
 import com.jerboa.openLink
-import com.jerboa.ui.components.comment.CommentNode
+import com.jerboa.ui.components.comment.CommentNodes
 import com.jerboa.ui.components.comment.edit.CommentEditViewModel
 import com.jerboa.ui.components.comment.edit.commentEditClickWrapper
 import com.jerboa.ui.components.comment.reply.CommentReplyViewModel
@@ -190,92 +189,90 @@ fun PostActivity(
                                 )
                             }
                             // Can't really do scrolling well here either because of tree
-                            items(commentNodes) { node ->
-                                CommentNode(
-                                    node = node,
-                                    onUpvoteClick = { commentView ->
-                                        account?.also { acct ->
-                                            postViewModel.likeComment(
-                                                commentView = commentView,
-                                                voteType = VoteType.Upvote,
-                                                account = acct,
-                                                ctx = ctx,
-                                            )
-                                        }
-                                    },
-                                    onDownvoteClick = { commentView ->
-                                        account?.also { acct ->
-                                            postViewModel.likeComment(
-                                                commentView = commentView,
-                                                voteType = VoteType.Downvote,
-                                                account = acct,
-                                                ctx = ctx,
-                                            )
-                                        }
-                                    },
-                                    onReplyClick = { commentView ->
-                                        commentReplyClickWrapper(
-                                            commentReplyViewModel = commentReplyViewModel,
-                                            parentCommentView = commentView,
-                                            postId = commentView.post.id,
-                                            navController = navController,
+                            CommentNodes(
+                                nodes = commentNodes,
+                                onUpvoteClick = { commentView ->
+                                    account?.also { acct ->
+                                        postViewModel.likeComment(
+                                            commentView = commentView,
+                                            voteType = VoteType.Upvote,
+                                            account = acct,
+                                            ctx = ctx,
                                         )
-                                    },
-                                    onSaveClick = { commentView ->
-                                        account?.also { acct ->
-                                            postViewModel.saveComment(
-                                                commentView = commentView,
-                                                account = acct,
-                                                ctx = ctx,
-                                            )
-                                        }
-                                    },
-                                    onPersonClick = { personId ->
-                                        personClickWrapper(
-                                            personProfileViewModel,
-                                            personId,
-                                            account,
-                                            navController,
-                                            ctx
+                                    }
+                                },
+                                onDownvoteClick = { commentView ->
+                                    account?.also { acct ->
+                                        postViewModel.likeComment(
+                                            commentView = commentView,
+                                            voteType = VoteType.Downvote,
+                                            account = acct,
+                                            ctx = ctx,
                                         )
-                                    },
-                                    onEditCommentClick = { commentView ->
-                                        commentEditClickWrapper(
-                                            commentEditViewModel,
-                                            commentView,
-                                            navController,
+                                    }
+                                },
+                                onReplyClick = { commentView ->
+                                    commentReplyClickWrapper(
+                                        commentReplyViewModel = commentReplyViewModel,
+                                        parentCommentView = commentView,
+                                        postId = commentView.post.id,
+                                        navController = navController,
+                                    )
+                                },
+                                onSaveClick = { commentView ->
+                                    account?.also { acct ->
+                                        postViewModel.saveComment(
+                                            commentView = commentView,
+                                            account = acct,
+                                            ctx = ctx,
                                         )
-                                    },
-                                    onReportClick = { commentView ->
-                                        commentReportClickWrapper(
-                                            createReportViewModel,
-                                            commentView.comment.id,
-                                            navController,
+                                    }
+                                },
+                                onPersonClick = { personId ->
+                                    personClickWrapper(
+                                        personProfileViewModel,
+                                        personId,
+                                        account,
+                                        navController,
+                                        ctx
+                                    )
+                                },
+                                onEditCommentClick = { commentView ->
+                                    commentEditClickWrapper(
+                                        commentEditViewModel,
+                                        commentView,
+                                        navController,
+                                    )
+                                },
+                                onReportClick = { commentView ->
+                                    commentReportClickWrapper(
+                                        createReportViewModel,
+                                        commentView.comment.id,
+                                        navController,
+                                    )
+                                },
+                                onBlockCreatorClick = {
+                                    account?.also { acct ->
+                                        postViewModel.blockCreator(
+                                            creator = it,
+                                            account = acct,
+                                            ctx = ctx,
                                         )
-                                    },
-                                    onBlockCreatorClick = {
-                                        account?.also { acct ->
-                                            postViewModel.blockCreator(
-                                                creator = it,
-                                                account = acct,
-                                                ctx = ctx,
-                                            )
-                                        }
-                                    },
-                                    onCommunityClick = { community ->
-                                        communityClickWrapper(
-                                            communityViewModel,
-                                            community.id,
-                                            account,
-                                            navController,
-                                            ctx
-                                        )
-                                    },
-                                    onPostClick = {}, // Do nothing
-                                    account = account,
-                                    moderators = postViewModel.moderators,
-                                )
-                            }
+                                    }
+                                },
+                                onCommunityClick = { community ->
+                                    communityClickWrapper(
+                                        communityViewModel,
+                                        community.id,
+                                        account,
+                                        navController,
+                                        ctx
+                                    )
+                                },
+                                onPostClick = {}, // Do nothing
+                                account = account,
+                                moderators = postViewModel.moderators,
+                            )
                         }
                     }
                 }
