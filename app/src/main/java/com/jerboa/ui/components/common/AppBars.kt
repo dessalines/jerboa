@@ -562,7 +562,7 @@ fun Sidebar(
                 title?.also {
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.titleMedium,
                     )
                 }
                 TimeAgo(

@@ -121,7 +121,6 @@ fun CreateEditPostBody(
             suggestedTitle?.let {
                 Text(
                     text = stringResource(R.string.create_post_copy_suggested_title, it),
-                    style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onBackground.muted,
                     modifier = Modifier.clickable { onNameChange(it) },
                 )

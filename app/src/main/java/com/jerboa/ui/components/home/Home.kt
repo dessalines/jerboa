@@ -60,7 +60,7 @@ fun HomeHeaderTitle(
     Column {
         Text(
             text = getLocalizedListingTypeName(ctx, selectedListingType),
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
         )
         Text(
             text = ctx.getString(selectedSortType.data.shortForm),

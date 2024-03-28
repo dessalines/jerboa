@@ -135,7 +135,7 @@ fun CommunityLinkLarger(
     CommunityLink(
         community = community,
         color = MaterialTheme.colorScheme.onSurface,
-        style = MaterialTheme.typography.titleLarge,
+        style = MaterialTheme.typography.titleMedium,
         size = LINK_ICON_SIZE,
         thumbnailSize = LARGER_ICON_THUMBNAIL_SIZE,
         spacing = DRAWER_ITEM_SPACING,
@@ -169,7 +169,7 @@ fun CommunityLinkLargerWithUserCount(
             Modifier
                 .padding(LARGE_PADDING)
                 .fillMaxWidth(),
-        style = MaterialTheme.typography.titleLarge,
+        style = MaterialTheme.typography.titleMedium,
         onClick = onClick,
         showDefaultIcon = showDefaultIcon,
         blurNSFW = blurNSFW,

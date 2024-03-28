@@ -1,76 +1,61 @@
 package com.jerboa.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.unit.sp
 
-const val FONT_SMALL_ADD = -7
-const val FONT_MEDIUM_ADD = -3
-const val FONT_LARGE_ADD = 0
-const val LINE_HEIGHT_MULTIPLIER = 1.5
+const val COMPOSE_BODY_LARGE_DEFAULT = 16
+val BASE_TYPOGRAPHY = Typography()
 
-// Set of Material typography styles to start with
-// Example from here: https://egeniq.com/blog/dynamic-font-sizes-with-jetpack-compose/
 fun generateTypography(baseFontSize: Int): Typography {
+    val customRatio = baseFontSize.toFloat() / COMPOSE_BODY_LARGE_DEFAULT
     return Typography(
-        bodySmall =
-            Typography().bodySmall.copy(
-                fontSize = baseFontSize.plus(FONT_SMALL_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_SMALL_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        bodyMedium =
-            Typography().bodyMedium.copy(
-                fontSize = baseFontSize.plus(FONT_MEDIUM_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_MEDIUM_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        bodyLarge =
-            Typography().bodyLarge.copy(
-                fontSize = baseFontSize.plus(FONT_LARGE_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_LARGE_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        titleSmall =
-            Typography().titleSmall.copy(
-                fontSize = baseFontSize.plus(FONT_SMALL_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_SMALL_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        titleMedium =
-            Typography().titleMedium.copy(
-                fontSize = baseFontSize.plus(FONT_MEDIUM_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_MEDIUM_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        titleLarge =
-            Typography().titleLarge.copy(
-                fontSize = baseFontSize.plus(FONT_LARGE_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_LARGE_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        headlineSmall =
-            Typography().headlineSmall.copy(
-                fontSize = baseFontSize.plus(FONT_SMALL_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_SMALL_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        headlineMedium =
-            Typography().headlineMedium.copy(
-                fontSize = baseFontSize.plus(FONT_MEDIUM_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_MEDIUM_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        headlineLarge =
-            Typography().headlineLarge.copy(
-                fontSize = baseFontSize.plus(FONT_LARGE_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_LARGE_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        labelSmall =
-            Typography().labelSmall.copy(
-                fontSize = baseFontSize.plus(FONT_SMALL_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_SMALL_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        labelMedium =
-            Typography().labelMedium.copy(
-                fontSize = baseFontSize.plus(FONT_MEDIUM_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_MEDIUM_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
-        labelLarge =
-            Typography().labelLarge.copy(
-                fontSize = baseFontSize.plus(FONT_LARGE_ADD).sp,
-                lineHeight = baseFontSize.plus(FONT_LARGE_ADD).times(LINE_HEIGHT_MULTIPLIER).sp,
-            ),
+        bodySmall = BASE_TYPOGRAPHY.bodySmall.copy(
+            fontSize = BASE_TYPOGRAPHY.bodySmall.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.bodySmall.lineHeight.times(customRatio),
+        ),
+        bodyMedium = BASE_TYPOGRAPHY.bodyMedium.copy(
+            fontSize = BASE_TYPOGRAPHY.bodyMedium.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.bodyMedium.lineHeight.times(customRatio),
+        ),
+        bodyLarge = BASE_TYPOGRAPHY.bodyLarge.copy(
+            fontSize = BASE_TYPOGRAPHY.bodyLarge.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.bodyLarge.lineHeight.times(customRatio),
+        ),
+        titleSmall = BASE_TYPOGRAPHY.titleSmall.copy(
+            fontSize = BASE_TYPOGRAPHY.titleSmall.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.titleSmall.lineHeight.times(customRatio),
+        ),
+        titleMedium = BASE_TYPOGRAPHY.titleMedium.copy(
+            fontSize = BASE_TYPOGRAPHY.titleMedium.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.titleMedium.lineHeight.times(customRatio),
+        ),
+        titleLarge = BASE_TYPOGRAPHY.titleLarge.copy(
+            fontSize = BASE_TYPOGRAPHY.titleLarge.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.titleLarge.lineHeight.times(customRatio),
+        ),
+        // Headlines use titles font size on purpose, default size is unusable big for Jerboa
+        headlineSmall = BASE_TYPOGRAPHY.headlineSmall.copy(
+            fontSize = BASE_TYPOGRAPHY.titleSmall.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.titleSmall.lineHeight.times(customRatio),
+        ),
+        headlineMedium = BASE_TYPOGRAPHY.headlineMedium.copy(
+            fontSize = BASE_TYPOGRAPHY.titleMedium.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.titleMedium.lineHeight.times(customRatio),
+        ),
+        headlineLarge = BASE_TYPOGRAPHY.headlineLarge.copy(
+            fontSize = BASE_TYPOGRAPHY.titleLarge.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.titleLarge.lineHeight.times(customRatio),
+        ),
+        labelSmall = BASE_TYPOGRAPHY.labelSmall.copy(
+            fontSize = BASE_TYPOGRAPHY.labelSmall.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.labelSmall.lineHeight.times(customRatio),
+        ),
+        labelMedium = BASE_TYPOGRAPHY.labelMedium.copy(
+            fontSize = BASE_TYPOGRAPHY.labelMedium.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.labelMedium.lineHeight.times(customRatio),
+        ),
+        labelLarge = BASE_TYPOGRAPHY.labelLarge.copy(
+            fontSize = BASE_TYPOGRAPHY.labelLarge.fontSize.times(customRatio),
+            lineHeight = BASE_TYPOGRAPHY.labelLarge.lineHeight.times(customRatio),
+        ),
     )
 }

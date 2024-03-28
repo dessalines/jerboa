@@ -103,7 +103,7 @@ fun PersonProfileTopSection(
         ) {
             PersonName(
                 person = personView.person,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
             )
 
             TimeAgo(
@@ -278,7 +278,7 @@ fun PersonProfileHeaderTitle(
     Column {
         Text(
             text = personName,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
         )
         Text(
             text = LocalContext.current.getString(selectedSortType.data.shortForm),

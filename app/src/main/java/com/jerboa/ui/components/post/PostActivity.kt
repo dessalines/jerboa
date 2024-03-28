@@ -121,7 +121,7 @@ fun CommentsHeaderTitle(selectedSortType: CommentSortType) {
     Column {
         Text(
             text = stringResource(R.string.post_activity_comments),
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
         )
         Text(
             text = getLocalizedCommentSortTypeName(ctx, selectedSortType),

@@ -1552,4 +1552,4 @@ fun Context.getVersionCode(): Int =
         getPackageInfo().versionCode
     }
 
-fun Int.toBool() = if (this > 0) true else false
+fun Int.toBool() = this > 0

@@ -100,7 +100,7 @@ fun CommunityTopSection(
             ) {
                 Text(
                     text = communityView.community.title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             }
@@ -255,7 +255,7 @@ fun CommunityHeaderTitle(
     Column {
         Text(
             text = communityName,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
             modifier = Modifier.customMarquee(),
         )

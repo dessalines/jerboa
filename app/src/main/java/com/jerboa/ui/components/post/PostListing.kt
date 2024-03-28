@@ -337,7 +337,7 @@ fun PostName(
 
     Text(
         text = postView.post.name,
-        style = MaterialTheme.typography.headlineLarge,
+        style = MaterialTheme.typography.headlineMedium,
         color = color,
         modifier = Modifier.testTag("jerboa:posttitle"),
     )
@@ -1739,7 +1739,7 @@ fun MetadataCard(post: Post) {
                     if (post.name != embedTitle) {
                         Text(
                             text = embedTitle,
-                            style = MaterialTheme.typography.titleLarge,
+                            style = MaterialTheme.typography.titleMedium,
                         )
                         if (post.embed_description != null) {
                             HorizontalDivider(modifier = Modifier.padding(vertical = LARGE_PADDING))

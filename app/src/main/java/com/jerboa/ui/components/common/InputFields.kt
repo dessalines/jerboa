@@ -195,7 +195,7 @@ fun CreateLinkDialog(
             ) {
                 Text(
                     text = stringResource(R.string.input_fields_insert_link),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 OutlinedTextField(
